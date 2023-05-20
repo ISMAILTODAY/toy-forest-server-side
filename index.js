@@ -62,7 +62,6 @@ async function run() {
         app.put('/alldata/:id', async (req, res) => {
             const id = req.params.id;
             const user = req.body;
-            // console.log(user)
             const filter = { _id: new ObjectId(id) }
             const option = { upsert: true }
             const updatedUser = {
@@ -79,7 +78,6 @@ async function run() {
 
         app.delete('/alldata/:id', async (req, res) => {
             const id = req.params.id;
-            // console.log(id)
             const query = { _id: new ObjectId(id) }
             const result = await toyCollection.deleteOne(query);
             res.json(result);
