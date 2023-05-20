@@ -83,30 +83,7 @@ async function run() {
             res.json(result);
         })
 
-        // app.get("/dataascending", async (req, res) => {
-        //     console.log(req.query.email)
-        //     let query = {};
-        //     if (req.query?.email) {
-        //         query = { email: req.query.email }
-        //     }
 
-        //     const result = await toyCollection.find(query).sort({ price: 1 }).toArray();
-        //     res.send(result);
-        //     console.log(result)
-        // })
-
-
-
-
-
-
-
-
-
-
-
-        // await client.db("admin").command({ ping: 1 });
-        // console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();
