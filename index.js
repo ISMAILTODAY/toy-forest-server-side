@@ -43,7 +43,6 @@ async function run() {
 
             const result = await toyCollection.find(query).sort(sorts).toArray();
             res.json(result);
-            // console.log(result)
         })
 
 
