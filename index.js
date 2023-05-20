@@ -1,7 +1,7 @@
 const express = require('express');
+require('dotenv').config()
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-require('dotenv').config()
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -27,11 +27,12 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        client.connect();
         // Send a ping to confirm a successful connection
 
         const toyDb = client.db('allToysData');
         const toyCollection = toyDb.collection('toyData')
+
 
 
         app.get("/alldata", async (req, res) => {
@@ -43,29 +44,30 @@ async function run() {
             }
 
             const result = await toyCollection.find(query).sort(sorts).toArray();
-            res.send(result);
-            console.log(result)
+            res.json(result);
+            // console.log(result)
         })
-
 
 
         app.get('/alldata', async (req, res) => {
             // console.log(req.query)
             const cursor = toyCollection.find();
             const result = await cursor.toArray();
-            res.send(result);
+            res.json(result);
         })
+
+
         app.post('/alldata', async (req, res) => {
             const addToys = req.body;
             // console.log(req.body)
             const result = await toyCollection.insertOne(addToys);
-            res.send(result);
+            res.json(result);
         })
 
         app.put('/alldata/:id', async (req, res) => {
             const id = req.params.id;
             const user = req.body;
-            console.log(user)
+            // console.log(user)
             const filter = { _id: new ObjectId(id) }
             const option = { upsert: true }
             const updatedUser = {
@@ -77,15 +79,15 @@ async function run() {
                 }
             }
             const result = await toyCollection.updateOne(filter, updatedUser, option);
-            res.send(result);
+            res.json(result);
         })
 
         app.delete('/alldata/:id', async (req, res) => {
             const id = req.params.id;
-            console.log(id)
+            // console.log(id)
             const query = { _id: new ObjectId(id) }
             const result = await toyCollection.deleteOne(query);
-            res.send(result);
+            res.json(result);
         })
 
         // app.get("/dataascending", async (req, res) => {
@@ -110,8 +112,8 @@ async function run() {
 
 
 
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        // await client.db("admin").command({ ping: 1 });
+        // console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();
@@ -126,5 +128,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`toy is runnig on port ${port}`)
+    // console.log(`toy is runnig on port ${port}`)
 })
