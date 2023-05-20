@@ -47,7 +47,6 @@ async function run() {
 
 
         app.get('/alldata', async (req, res) => {
-            // console.log(req.query)
             const cursor = toyCollection.find();
             const result = await cursor.toArray();
             res.json(result);
